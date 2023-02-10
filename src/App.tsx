@@ -1,25 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import LoginPage from "./pages/login/LoginPage";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import NeedAuth from "./shared/NeedAuth";
+import { Provider } from "react-redux";
+import { store } from "src/redux/store";
+import Layout from "./shared/Layout/Layout";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
+          <Route
+            path="/*"
+            element={
+              <NeedAuth>
+                <Layout />
+              </NeedAuth>
+            }
+          />
+        </Routes>
+      </BrowserRouter>
+    </Provider>
   );
 }
 
